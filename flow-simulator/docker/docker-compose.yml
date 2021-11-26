@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  cerberus-db:
+    container_name: mariadb
+    image: mariadb:10.4
+    environment:
+      MYSQL_ROOT_PASSWORD: passwort_simulator
+      MYSQL_DATABASE: cerberus
+    ports:
+      - "127.0.0.1:3310:3306"
+
+  base:
+    image: cerberus-flowsim
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+networks:
+  default:
+    name: cerberus-network
