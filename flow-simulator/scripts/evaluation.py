@@ -56,14 +56,14 @@ ALGO_TO_LABEL = {
 
 TOPOLOGIES_TO_DB_ID = {
     # FIXME adapt to your settings
-    "expander-16-40G": (21,),
-    "rotornet-16-40G": (19,),
-    "cerberus-16-0-4-12-40G": (23,)
+    "expander-16-40G": (3,),
+    "rotornet-16-40G": (1,),
+    "cerberus-16-0-4-12-40G": (2,)
 }
 ALGOS_TO_DB_ID = {
-    'Expander': 7,
-    'RotorNet': 8,
-    'Cerberus': 32
+    'Expander': 3,
+    'RotorNet': 1,
+    'Cerberus': 2
 }
 
 TOPO_CONFIGS = [
@@ -85,7 +85,9 @@ DEMAND_CONFIGS = [
 # %% -------------------------------------------------------------------------------------------------------------------
 # LOAD DATA
 # ----------------------------------------------------------------------------------------------------------------------
-FROM_DATABASE = False
+# Set to false and edit PATH_TO_DATA to evaluate from files without the database container
+FROM_DATABASE = True
+PATH_TO_DATA = "/path/to/your/simulation/data/"
 
 
 # %%
@@ -107,7 +109,7 @@ def get_sim_ids(sysconfig, demconfig, sim_behavior=None, only_finished=True):
             f" fk_algorithm_id={ALGOS_TO_DB_ID[sysconfig.algo_id]} and " \
             f" fk_topology_id in {str(TOPOLOGIES_TO_DB_ID[sysconfig.topo_name]).replace(',)', ')')} and  " \
             f" f.name='{demconfig.flowgenname}'" \
-            f" and simulation_builder_name in {sim_behavior} "
+            f" and simulation_builder_name in {str(sim_behavior).replace(',)', ')')} "
     if only_finished:
         query += f" and finished=1 "
     if demconfig.bidi:
@@ -158,9 +160,6 @@ if FROM_DATABASE:
             continue
         FCTS[(syscfg, load)] = get_fct_data(f"({','.join([str(s) for s in simids])})")
 else:
-    # TODO update
-    PATH_TO_DATA = "/home/johannes/DATAS/cerberus/cerberus_flow_simulator_data/"
-
     # Read simulation configs:
     simconfigs = pd.read_csv(f"{PATH_TO_DATA}/simulations.csv")
     # Divide by base number of flows and num of uplinks

@@ -73,14 +73,14 @@ if __name__ == "__main__":
     static_algo = score_based_algorithm.TorByTorGreedyScoreBasedAlgorithmConfiguration(
         score_factory=flow_score.VolumeBasedFlowScore.__name__,
         topology_view_configuration=ocs_topology.TopologyWithOcsViewConfiguration(
-            relevant_link_identifiers=[ocs_topology.LinkIdentifiers.static, ocs_topology.LinkIdentifiers.default],
+            relevant_link_identifiers=[LinkIdentifiers.static, LinkIdentifiers.default],
             relevant_ocs_identifiers=[]
         )
     )
     rnet_algo = rotornet_algorithm.RotorNetTorToTorTwoHopAlgorithmWithFullRateAllocationConfiguration(
         tor2tor_demand_matrix_configuration=demand_matrix.SimpleTor2TorDemandMatrixWithFlowListConfiguration(),
         topology_view_configuration=ocs_topology.TopologyWithOcsViewConfiguration(
-            relevant_link_identifiers=[ocs_topology.LinkIdentifiers.rotor, ocs_topology.LinkIdentifiers.default],
+            relevant_link_identifiers=[LinkIdentifiers.rotor, LinkIdentifiers.default],
             relevant_ocs_identifiers=[ocs_topology.OCSSwitchTypes.rotor]
         ),
         rate_limit_factor=1
@@ -88,8 +88,8 @@ if __name__ == "__main__":
     da_algo = score_based_algorithm.GreedyOpticalScoreBasedAlgorithmConfiguration(
         score_factory=flow_score.VolumeBasedFlowScore.__name__,
         topology_view_configuration=ocs_topology.TopologyWithOcsViewConfiguration(
-            relevant_link_identifiers=[ocs_topology.LinkIdentifiers.dynamic,
-                                       ocs_topology.LinkIdentifiers.default],
+            relevant_link_identifiers=[LinkIdentifiers.dynamic,
+                                       LinkIdentifiers.default],
             relevant_ocs_identifiers=[ocs_topology.OCSSwitchTypes.ocs]
         ),
         raise_no_allocation=True,

@@ -6,7 +6,7 @@ from .algorithm_factory import algorithm_factory_decorator
 
 from dcflowsim import constants
 from dcflowsim.environment import environment_listener
-from dcflowsim.network import ocs_topology
+from dcflowsim.network import ocs_topology, network_elements
 from dcflowsim.data_writer.factory import peewee_interface_factory_decorator
 from dcflowsim.data_writer.peewee_interface import AlgorithmInterface
 
@@ -126,17 +126,20 @@ class CerberusAlgorithmConfiguration(AbstractAlgorithmConfiguration):
         # Set appropriate topology view configurations (keep existing configs)
         if self.static_algorithm.topology_view_configuration is None:
             self.static_algorithm.topology_view_configuration = ocs_topology.TopologyWithOcsViewConfiguration(
-                relevant_link_identifiers=[ocs_topology.LinkIdentifiers.static, ocs_topology.LinkIdentifiers.default],
+                relevant_link_identifiers=[network_elements.LinkIdentifiers.static,
+                                           network_elements.LinkIdentifiers.default],
                 relevant_ocs_identifiers=[]
             )
         if self.rotor_algorithm.topology_view_configuration is None:
             self.rotor_algorithm.topology_view_configuration = ocs_topology.TopologyWithOcsViewConfiguration(
-                relevant_link_identifiers=[ocs_topology.LinkIdentifiers.rotor, ocs_topology.LinkIdentifiers.default],
+                relevant_link_identifiers=[network_elements.LinkIdentifiers.rotor,
+                                           network_elements.LinkIdentifiers.default],
                 relevant_ocs_identifiers=[ocs_topology.OCSSwitchTypes.rotor]
             )
         if self.da_algorithm.topology_view_configuration is None:
             self.da_algorithm.topology_view_configuration = ocs_topology.TopologyWithOcsViewConfiguration(
-                relevant_link_identifiers=[ocs_topology.LinkIdentifiers.dynamic, ocs_topology.LinkIdentifiers.default],
+                relevant_link_identifiers=[network_elements.LinkIdentifiers.dynamic,
+                                           network_elements.LinkIdentifiers.default],
                 relevant_ocs_identifiers=[ocs_topology.OCSSwitchTypes.ocs]
             )
 

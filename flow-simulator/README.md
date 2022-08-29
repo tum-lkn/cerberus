@@ -3,7 +3,7 @@ Python-based flow level simulator for Cerberus: The Power of Choices in Datacent
 
 Build the docker image
 ```bash
-docker-compose -f docker/docker-compose.ym pull
+docker-compose -f docker/docker-compose.yml pull
 docker-compose -f docker/docker-compose.yml build
 ```
 
@@ -15,7 +15,7 @@ docker-compose -f docker/docker-compose.yml up -d cerberus-db
 Start the simulation:
 ```bash
 docker-compose -f docker/docker-compose.yml run -v ${PWD}/..:/home/sim/project base bash
-cd /home/sim_project/flow-simulator
+cd /home/sim/project/flow-simulator
 PYTHONPATH=/home/sim/project/flow-simulator/src python3 scripts/cerberus_rotornet_expander_k16_poisson_40G.py
 ```
 
@@ -28,3 +28,4 @@ Afterwards, `evaluation.py` can be run
 python3 evaluation.py
 ```
 It is formated in Scientific|Cell mode as supported by JetBrains Pycharm or Spyder.
+
